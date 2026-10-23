@@ -1,0 +1,47 @@
+NAME
+	libutf8 - UTF-8 encoding and decoding
+
+SYNOPSIS
+	#include <libutf8.h>
+
+	Link with -lutf8.
+
+DESCRIPTION
+	The libutf8 library provides functions for encoding and decoding
+	UTF-8 sequences, with flexibility in how invalid input is handled.
+
+	The library implements the following functions:
+
+   Encoding functions:
+	libutf8_encode(3)
+		Encode a codepoint as UTF-8
+
+	libutf8_encode_measure(3)
+		Get the number of bytes required to encode a codepoint
+
+   Decoding functions:
+	libutf8_decode(3)
+		Decode one sequence from a string
+
+	libutf8_decode_mem(3)
+		Decode one sequence from a memory buffer
+
+   Codepoint and byte test functions:
+	libutf8_is_noncharacter(3)
+		Test whether a codepoint is a Unicode non-character
+		codepoint
+
+	libutf8_is_surrogate(3)
+		Test whether a codepoint is a UTF-16 surrogate
+
+	libutf8_is_invalid(3)
+		Test whether a codepoint is invalid Unicode
+
+	libutf8_is_valid(3)
+		Test whether a codepoint is valid Unicode
+
+	libutf8_is_continuation(3)
+		Test whether a byte is a UTF-8 continuation byte
+
+SEE ALSO
+	libgrapheme(7)

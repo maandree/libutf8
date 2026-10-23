@@ -1,0 +1,70 @@
+.TH LIBUTF8_ENCODE 3 LIBUTF8
+.SH NAME
+libutf8_encode - Encode a codepoint as UTF-8
+
+.SH SYNOPSIS
+.nf
+#include <libutf8.h>
+
+size_t \fBlibutf8_encode\fP(char *\fIout_buffer\fP, uint_least32_t \fIcodepoint\fP);
+.fi
+.PP
+Link with
+.IR -lutf8 .
+
+.SH DESCRIPTION
+The
+.BR libutf8_encode ()
+function encodes
+.I codepoint
+as UTF-8 in
+.IR Iout_buffer .
+The buffer must have room for the number of bytes returned, up to six bytes
+for all accept values of
+.I codepoint
+and up to four bytes for all codepoints valid within the Unicode standard.
+.PP
+The output is not NUL-terminated.
+
+.SH RETURN VALUE
+The
+.BR libutf8_encode ()
+function returns the number of bytes written, or zero if
+.I codepoint
+is unrepresentable.
+
+.SH ERRORS
+The
+.BR libutf8_encode ()
+function cannot fail per se, and never sets
+.IR errno ;
+.B EDOM
+is an appropriate value when the function returns zero.
+
+.SH ATTRIBUTES
+For an explanation of the terms used in this section, see
+.BR attributes (7).
+.PP
+.TS
+allbox;
+lb lb lb lb
+l l l l.
+Interface	Thread safety	Async-signal safety	Async-cancel safety
+T{
+.BR libutf8_encode ()
+T}	MT-Safe	AS-Safe	AC-Safe
+.TE
+.sp
+
+.SH NOTES
+UTF-8 has historically supported 31-bit codepoints. The
+.BR libutf8_encode ()
+function does so as well, and follows regulare pattern, extended,
+as it was historically, to support 31-bit integers using up to
+6 bytes. Thus the function supports codepoints beyond 
+.BR LIBUTF8_ULTIMATE_CODEPOINT .
+
+.SH SEE ALSO
+.BR libutf8 (7),
+.BR libutf8_encode_measure (3),
+.BR libutf8_decode (3)

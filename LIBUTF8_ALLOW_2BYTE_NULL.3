@@ -1,0 +1,26 @@
+.TH LIBUTF8_ALLOW_2BYTE_NULL 3 LIBUTF8
+.SH NAME
+LIBUTF8_ALLOW_2BYTE_NULL - Accept the two-byte overlong encoding of U+0000
+
+.SH SYNOPSIS
+.nf
+#include <libutf8.h>
+
+#define \fBLIBUTF8_ALLOW_2BYTE_NULL\fP /* implementation omitted */
+.fi
+
+.SH DESCRIPTION
+The
+.B LIBUTF8_ALLOW_2BYTE_NULL
+macro is a flag for
+.BR libutf8_decode (3)
+and
+.BR libutf8_decode_mem (3).
+It causes those functions to accept the two-byte overlong
+UTF-8 encoding of U+0000.
+
+.SH SEE ALSO
+.BR libutf8 (7),
+.BR LIBUTF8_ALLOW_LONG_ENCODING (3),
+.BR libutf8_decode (3),
+.BR libutf8_decode_mem (3)

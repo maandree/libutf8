@@ -1,0 +1,22 @@
+.TH LIBUTF8_REPLACEMENT_CHARACTER_CODEPOINT 3 LIBUTF8
+.SH NAME
+LIBUTF8_REPLACEMENT_CHARACTER_CODEPOINT - Unicode replacement character as a codepoint
+
+.SH SYNOPSIS
+.nf
+#include <libutf8.h>
+
+#define \fBLIBUTF8_REPLACEMENT_CHARACTER_CODEPOINT\fP /* implementation omitted */
+.fi
+
+.SH DESCRIPTION
+The
+.B LIBUTF8_REPLACEMENT_CHARACTER_CODEPOINT
+macro expands the codepoint of U+FFFD REPLACEMENT CHARACTER
+expressed as an unsigned integer that is at least 16 bits
+wide and interpretable by the preprocessor
+
+.SH SEE ALSO
+.BR libutf8 (7),
+.BR LIBUTF8_REPLACEMENT_CHARACTER_UTF8 (3),
+.BR LIBUTF8_REPLACE_INVALID (3)

@@ -1,0 +1,58 @@
+.TH LIBUTF8_ENCODE_MEASURE 3 LIBUTF8
+.SH NAME
+libutf8_encode_measure - Get the number of bytes required to encode a codepoint
+
+.SH SYNOPSIS
+.nf
+#include <libutf8.h>
+
+size_t \fBlibutf8_encode_measure\fP(uint_least32_t \fIcodepoint\fP);
+.fi
+.PP
+Link with
+.IR -lutf8 .
+
+.SH DESCRIPTION
+The
+.BR libutf8_encode_measure ()
+function returns the number of bytes required to encode
+.I codepoint
+as UTF-8. It returns zero if the codepoint cannot be
+represented in 31 bits.
+
+.SH RETURN VALUE
+The
+.BR libutf8_encode_measure ()
+function returns the number of bytes required to encode
+.IR codepoint ,
+or zero if it is unrepresentable.
+This value cannot exceed 6, and does not exceed 4 for
+codepoint less or equal to
+.BR LIBUTF8_ULTIMATE_CODEPOINT (3).
+
+.SH ERRORS
+The
+.BR libutf8_encode_measure ()
+function cannot fail per se, and never sets
+.IR errno ;
+.B EDOM
+is an appropriate value when the function returns zero.
+
+.SH ATTRIBUTES
+For an explanation of the terms used in this section, see
+.BR attributes (7).
+.PP
+.TS
+allbox;
+lb lb lb lb
+l l l l.
+Interface	Thread safety	Async-signal safety	Async-cancel safety
+T{
+.BR libutf8_encode_measure ()
+T}	MT-Safe	AS-Safe	AC-Safe
+.TE
+.sp
+
+.SH SEE ALSO
+.BR libutf8 (7),
+.BR libutf8_encode (3)

@@ -1,0 +1,114 @@
+.TH LIBUTF8_DECODE 3 LIBUTF8
+.SH NAME
+libutf8_decode - Decode one UTF-8 sequence from a string
+
+.SH SYNOPSIS
+.nf
+#include <libutf8.h>
+
+size_t \fBlibutf8_decode\fP(const char *\fItext\fP, uint_least32_t *\fIcodepoint_out\fP, unsigned \fIflags\fP);
+.fi
+.PP
+Link with
+.IR -lutf8 .
+
+.SH DESCRIPTION
+The
+.BR libutf8_decode ()
+function decodes the first UTF-8 sequence in
+.IR text .
+
+Unless the
+.BR libutf8_decode ()
+function returns 0, and unless
+.I codepoint_out
+is
+.IR NULL ,
+the decoded codepoint is stored in
+.IR *codepoint_out .
+.PP
+.I flags
+is a bitwise OR of zero or more of the following values:
+.TP
+.B LIBUTF8_REPLACE_INVALID
+Replace decoded invalid codepoints up to
+.B LIBUTF8_ULTIMATE_CODEPOINT
+with the Unicode REPLACEMENT CHARACTER (U+FFFD).
+This does not affect illegal byte sequences.
+.TP
+.B LIBUTF8_RETURN_INVALID
+Return decoded invalid codepoints up to
+.B LIBUTF8_ULTIMATE_CODEPOINT
+unchanged.
+.TP
+.B LIBUTF8_ALLOW_31_BITS
+Accept codepoints greater than
+.BR LIBUTF8_ULTIMATE_CODEPOINT ,
+up to representable with 31 bits, unsigned.
+.TP
+.B LIBUTF8_ALLOW_2BYTE_NULL
+Accept the two-byte overlong encoding of U+0000.
+.TP
+.B LIBUTF8_ALLOW_LONG_ENCODING
+Accept overlong encodings up to six bytes.
+This includes the encoding accepted by
+.BR LIBUTF8_ALLOW_2BYTE_NULL .
+.PP
+It is unspecified which flag dominates if both
+.B LIBUTF8_REPLACE_INVALID
+and
+.B LIBUTF8_RETURN_INVALID
+are set.
+
+.SH RETURN VALUE
+The
+.BR libutf8_decode ()
+function returns the number of decoded bytes,
+or zero if the input is invalid.
+
+.SH ERRORS
+The function cannot fail per se, and never sets
+.IR errno .
+.B EILSEQ
+is an appropriate value when it returns zero.
+
+.SH ATTRIBUTES
+For an explanation of the terms used in this section, see
+.BR attributes (7).
+.PP
+.TS
+allbox;
+lb lb lb lb
+l l l l.
+Interface	Thread safety	Async-signal safety	Async-cancel safety
+T{
+.BR libutf8_decode ()
+T}	MT-Safe	AS-Safe	AC-Safe
+.TE
+.sp
+
+.SH APPLICATION USAGE
+Application that use
+.BR LIBUTF8_REPLACE_INVALID (3)
+will probably also want to skip the first
+undecoded by when 0 is returned and insert
+.BR LIBUTF8_REPLACEMENT_CHARACTER_CODEPOINT (3)
+in its place, and optionally skip the following
+bytes until there is one for which
+.BR libutf8_is_continuation (3)
+returns zero.
+
+.SH NOTES
+The
+.BR libutf8_decode ()
+function can read up
+to six bytes while examining a malformed sequence; use
+.BR libutf8_decode_mem (3)
+for a length-bounded buffer.
+
+.SH SEE ALSO
+.BR libutf8 (7),
+.BR libutf8_decode_mem (3),
+.BR libutf8_is_continuation (3),
+.BR libutf8_is_surrogate (3),
+.BR LIBUTF8_REPLACEMENT_CHARACTER_CODEPOINT (3)

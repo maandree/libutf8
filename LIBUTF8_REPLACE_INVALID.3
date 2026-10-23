@@ -1,0 +1,37 @@
+.TH LIBUTF8_REPLACE_INVALID 3 LIBUTF8
+.SH NAME
+LIBUTF8_REPLACE_INVALID - Replace decoded invalid Unicode codepoints
+
+.SH SYNOPSIS
+.nf
+#include <libutf8.h>
+
+#define \fBLIBUTF8_REPLACE_INVALID\fP /* implementation omitted */
+.fi
+
+.SH DESCRIPTION
+The
+.B LIBUTF8_REPLACE_INVALID
+macro is a flag for
+.BR libutf8_decode (3)
+and
+.BR libutf8_decode_mem (3).
+It causes those functions to replace a decoded invalid Unicode codepoint with
+.BR LIBUTF8_REPLACEMENT_CHARACTER_CODEPOINT (3)
+rather than reject it.
+.PP
+The flag applies to non-character codepoints (see
+.BR libutf8_is_noncharacter (3)
+for definition) and UTF-16 surrogates.
+It does not make illegal byte sequences, overlong encodings,
+or codepoints above
+.B LIBUTF8_ULTIMATE_CODEPOINT
+valid.
+
+.SH SEE ALSO
+.BR libutf8 (7),
+.BR LIBUTF8_RETURN_INVALID (3),
+.BR LIBUTF8_REPLACEMENT_CHARACTER_CODEPOINT (3),
+.BR libutf8_is_continuation (3),
+.BR libutf8_decode (3),
+.BR libutf8_decode_mem (3)

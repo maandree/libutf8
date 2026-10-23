@@ -1,0 +1,47 @@
+.TH LIBUTF8_IS_SURROGATE 3 LIBUTF8
+.SH NAME
+libutf8_is_surrogate - Test whether a codepoint is a UTF-16 surrogate
+
+.SH SYNOPSIS
+.nf
+#include <libutf8.h>
+
+int \fBlibutf8_is_surrogate\fP(uint_least32_t \fIcodepoint\fP);
+.fi
+.PP
+Link with
+.IR -lutf8 .
+
+.SH DESCRIPTION
+The
+.BR libutf8_is_surrogate ()
+function tests whether a codepoint is a UTF-16 surrogate.
+
+.SH RETURN VALUE
+The
+.BR libutf8_is_surrogate ()
+function returns 1 if the predicate is true, and 0 otherwise.
+
+.SH ERRORS
+The
+.BR libutf8_is_surrogate ()
+function cannot fail.
+
+.SH ATTRIBUTES
+For an explanation of the terms used in this section, see
+.BR attributes (7).
+.PP
+.TS
+allbox;
+lb lb lb lb
+l l l l.
+Interface	Thread safety	Async-signal safety	Async-cancel safety
+T{
+.BR libutf8_is_surrogate ()
+T}	MT-Safe	AS-Safe	AC-Safe
+.TE
+.sp
+
+.SH SEE ALSO
+.BR libutf8 (7),
+.BR libutf8_is_invalid (3)

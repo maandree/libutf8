@@ -1,0 +1,83 @@
+.TH LIBUTF8 7 LIBUTF8
+.SH NAME
+libutf8 - UTF-8 encoding and decoding
+
+.SH SYNOPSIS
+.ni
+#include <libutf8.h>
+.fi
+.PP
+Link with
+.IR -lutf8 .
+
+.SH DESCRIPTION
+The
+.B libutf8
+library provides functions for encoding and decoding
+UTF-8 sequences, with flexibility in how invalid input is handled.
+.PP
+The library implements the following functions and macros:
+.sp
+.SS Encoding functions:
+.TP
+.BR libutf8_encode (3)
+Encode a codepoint as UTF-8
+.TP
+.BR libutf8_encode_measure (3)
+Get the number of bytes required to encode a codepoint
+.sp
+.SS Decoding functions:
+.TP
+.BR libutf8_decode (3)
+Decode one sequence from a string
+.TP
+.BR libutf8_decode_mem (3)
+Decode one sequence from a memory buffer
+.sp
+.SS Codepoint and byte test functions:
+.TP
+.BR libutf8_is_noncharacter (3)
+Test whether a codepoint is a Unicode non-character codepoint
+.TP
+.BR libutf8_is_surrogate (3)
+Test whether a codepoint is a UTF-16 surrogate
+.TP
+.BR libutf8_is_invalid (3)
+Test whether a codepoint is invalid Unicode
+.TP
+.BR libutf8_is_valid (3)
+Test whether a codepoint is valid Unicode
+.TP
+.BR libutf8_is_continuation (3)
+Test whether a byte is a UTF-8 continuation byte
+.sp
+.SS Macro constants:
+.TP
+.BR LIBUTF8_ULTIMATE_CODEPOINT (3)
+The greatest Unicode codepoint
+.TP
+.BR LIBUTF8_REPLACEMENT_CHARACTER_CODEPOINT (3)
+The Unicode replacement character as a codepoint
+.TP
+.BR LIBUTF8_REPLACEMENT_CHARACTER_UTF8 (3)
+The Unicode replacement character encoded as UTF-8
+.sp
+.SS Decoding flags:
+.TP
+.BR LIBUTF8_REPLACE_INVALID (3)
+Replace decoded invalid Unicode codepoints
+.TP
+.BR LIBUTF8_RETURN_INVALID (3)
+Return decoded invalid Unicode codepoints as is
+.TP
+.BR LIBUTF8_ALLOW_31_BITS (3)
+Accept decoded codepoints up to 31 bits
+.TP
+.BR LIBUTF8_ALLOW_2BYTE_NULL (3)
+Accept the two-byte overlong encoding of U+0000
+.TP
+.BR LIBUTF8_ALLOW_LONG_ENCODING (3)
+Accept overlong UTF-8 encodings
+
+.SH SEE ALSO
+.BR libgrapheme (7)

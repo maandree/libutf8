@@ -1,0 +1,28 @@
+.TH LIBUTF8_ULTIMATE_CODEPOINT 3 LIBUTF8
+.SH NAME
+LIBUTF8_ULTIMATE_CODEPOINT - The greatest Unicode codepoint
+
+.SH SYNOPSIS
+.nf
+#include <libutf8.h>
+
+#define \fBLIBUTF8_ULTIMATE_CODEPOINT\fP /* implementation omitted */
+.fi
+
+.SH DESCRIPTION
+The
+.B LIBUTF8_ULTIMATE_CODEPOINT
+macro expands to 0x10FFFF, the greatest codepoint in the Unicode
+codepoint-space, expressed as an unsigned integer that is at least
+32 bits wide and interpretable by the preprocessor.
+.PP
+Use this value when a boundary for Unicode codepoints is needed.
+Values greater than it are accepted by the decoding functions only with
+.BR LIBUTF8_ALLOW_31_BITS (3).
+
+.SH SEE ALSO
+.BR libutf8 (7),
+.BR libutf8_encode (3),
+.BR libutf8_is_invalid (3),
+.BR libutf8_is_valid (3),
+.BR LIBUTF8_ALLOW_31_BITS (3)

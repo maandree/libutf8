@@ -1,0 +1,124 @@
+.TH LIBUTF8_DECODE_MEM 3 LIBUTF8
+.SH NAME
+libutf8_decode_mem - Decode one UTF-8 sequence from a memory buffer
+
+.SH SYNOPSIS
+.nf
+#include <libutf8.h>
+
+size_t \fBlibutf8_decode_mem\fP(const char *\fItext\fP, size_t \fItext_len\fP, uint_least32_t *\fIcodepoint_out\fP, unsigned \fIflags\fP);
+.fi
+.PP
+Link with
+.IR -lutf8 .
+
+.SH DESCRIPTION
+The
+.BR libutf8_decode_mem ()
+function decodes the first UTF-8 sequence in
+.IR text ,
+however it the sequence is longer than
+.I text_len
+it reads the first byte and returns the
+sequence length indicated by that byte. In
+this case it is unspecified whether it reads
+any other byte than the first byte.
+
+Unless the
+.BR libutf8_decode_mem ()
+function returns 0 or a value greater than
+.IR text_len ,
+and unless
+.I codepoint_out
+is
+.IR NULL ,
+the decoded codepoint is stored in
+.IR *codepoint_out .
+.PP
+.I flags
+is a bitwise OR of zero or more of the following values:
+.TP
+.B LIBUTF8_REPLACE_INVALID
+Replace decoded invalid codepoints up to
+.B LIBUTF8_ULTIMATE_CODEPOINT
+with the Unicode REPLACEMENT CHARACTER (U+FFFD).
+This does not affect illegal byte sequences.
+.TP
+.B LIBUTF8_RETURN_INVALID
+Return decoded invalid codepoints up to
+.B LIBUTF8_ULTIMATE_CODEPOINT
+unchanged.
+.TP
+.B LIBUTF8_ALLOW_31_BITS
+Accept codepoints greater than
+.BR LIBUTF8_ULTIMATE_CODEPOINT ,
+up to representable with 31 bits, unsigned.
+.TP
+.B LIBUTF8_ALLOW_2BYTE_NULL
+Accept the two-byte overlong encoding of U+0000.
+.TP
+.B LIBUTF8_ALLOW_LONG_ENCODING
+Accept overlong encodings up to six bytes.
+This includes the encoding accepted by
+.BR LIBUTF8_ALLOW_2BYTE_NULL .
+.PP
+It is unspecified which flag dominates if both
+.B LIBUTF8_REPLACE_INVALID
+and
+.B LIBUTF8_RETURN_INVALID
+are set.
+
+.SH RETURN VALUE
+The
+.BR libutf8_decode_mem ()
+function returns the number of decoded bytes,
+or zero if the input is invalid. However if
+the sequence is longer than
+.I text_len
+is returns the indicated sequence length.
+.PP
+It is unspecified which is returned, 0 or
+the indicated sequence length when the leading
+byte indicates a length longer than
+.I text_len
+but the other available bytes do not create
+a valid continuation.
+
+.SH ERRORS
+The function cannot fail per se, and never sets
+.IR errno .
+.B EILSEQ
+is an appropriate value when it returns zero.
+
+.SH ATTRIBUTES
+For an explanation of the terms used in this section, see
+.BR attributes (7).
+.PP
+.TS
+allbox;
+lb lb lb lb
+l l l l.
+Interface	Thread safety	Async-signal safety	Async-cancel safety
+T{
+.BR libutf8_decode_mem ()
+T}	MT-Safe	AS-Safe	AC-Safe
+.TE
+.sp
+
+.SH APPLICATION USAGE
+Application that use
+.BR LIBUTF8_REPLACE_INVALID (3)
+will probably also want to skip the first
+undecoded by when 0 is returned and insert
+.BR LIBUTF8_REPLACEMENT_CHARACTER_CODEPOINT (3)
+in its place, and optionally skip the following
+bytes until there is one for which
+.BR libutf8_is_continuation (3)
+returns zero.
+
+.SH SEE ALSO
+.BR libutf8 (7),
+.BR libutf8_decode (3),
+.BR libutf8_is_continuation (3),
+.BR libutf8_is_surrogate (3),
+.BR LIBUTF8_REPLACEMENT_CHARACTER_CODEPOINT (3)
